@@ -113,7 +113,7 @@ myAreas[8] = {
 }
 
 
-local combat1 = Combat()
+local combat1 = Combat() -- Making different combats for the stages
 combat1:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
 combat1:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
 local combat2 = Combat()
@@ -139,7 +139,7 @@ combat8:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
 combat8:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
 
 
-combat1:setArea(createCombatArea(myAreas[1]))
+combat1:setArea(createCombatArea(myAreas[1])) -- setting the areas to the combats
 combat2:setArea(createCombatArea(myAreas[2]))
 combat3:setArea(createCombatArea(myAreas[3]))
 combat4:setArea(createCombatArea(myAreas[4]))
@@ -148,7 +148,7 @@ combat6:setArea(createCombatArea(myAreas[6]))
 combat7:setArea(createCombatArea(myAreas[7]))
 combat8:setArea(createCombatArea(myAreas[8]))
 
-function onGetFormulaValues(player, level, magicLevel)
+function onGetFormulaValues(player, level, magicLevel) -- we can use same values
 	local min = (level / 5) + (magicLevel * 8) + 50
 	local max = (level / 5) + (magicLevel * 12) + 75
 	return -min, -max
@@ -163,7 +163,7 @@ combat6:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 combat7:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 combat8:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
-function onCast1(p)
+function onCast1(p) -- cast fucntion for each stage of the spell
 	doCombat(p.cid, p.c1, p.var)
 end
 function onCast2(p)
@@ -188,9 +188,9 @@ function onCast8(p)
     doCombat(p.cid, p.c8, p.var)
 end
 
-function onCastSpell(creature, variant)
+function onCastSpell(creature, variant) -- cast the spells
 	p = { cid = creature, var = variant, c1 = combat1, c2 = combat2, c3 = combat3, c4 = combat4, c5 = combat5, c6 = combat6, c7 = combat7, c8 = combat8 }
-    
+    -- need to use events to have each stage go off at different times.
     addEvent(onCast1, 0, p)
     addEvent(onCast2, 50, p)
     addEvent(onCast3, 100, p)
