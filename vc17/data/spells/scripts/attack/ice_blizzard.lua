@@ -112,58 +112,31 @@ myAreas[8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 }
 
+local combats = {}
 
-local combat1 = Combat() -- Making different combats for the stages
-combat1:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat1:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat2 = Combat()
-combat2:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat2:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat3 = Combat()
-combat3:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat3:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat4 = Combat()
-combat4:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat4:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat5 = Combat()
-combat5:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat5:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat6 = Combat()
-combat6:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat6:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat7 = Combat()
-combat7:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat7:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-local combat8 = Combat()
-combat8:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat8:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
+i = 1
+while i < 9 do
+    combats[i] = Combat() -- adding combats to table and setting parameters
+    combats[i]:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
+    combats[i]:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
+    i = i + 1
+end
 
+for i, cb in ipairs(combats) do -- set areas to the different combats
+    cb:setArea(createCombatArea(myAreas[i]))
+end
 
-combat1:setArea(createCombatArea(myAreas[1])) -- setting the areas to the combats
-combat2:setArea(createCombatArea(myAreas[2]))
-combat3:setArea(createCombatArea(myAreas[3]))
-combat4:setArea(createCombatArea(myAreas[4]))
-combat5:setArea(createCombatArea(myAreas[5]))
-combat6:setArea(createCombatArea(myAreas[6]))
-combat7:setArea(createCombatArea(myAreas[7]))
-combat8:setArea(createCombatArea(myAreas[8]))
-
-function onGetFormulaValues(player, level, magicLevel) -- we can use same values
+function onGetFormulaValues(player, level, magicLevel) -- For this we will use same values
 	local min = (level / 5) + (magicLevel * 8) + 50
 	local max = (level / 5) + (magicLevel * 12) + 75
 	return -min, -max
 end
 
-combat1:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat2:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat3:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat4:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat5:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat6:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat7:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-combat8:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
+for i, cb in ipairs(combats) do
+    cb:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
+end
 
-function onCast1(p) -- cast fucntion for each stage of the spell
+function onCast1(p) -- cast function for each stage of the spell
 	doCombat(p.cid, p.c1, p.var)
 end
 function onCast2(p)
@@ -189,7 +162,7 @@ function onCast8(p)
 end
 
 function onCastSpell(creature, variant) -- cast the spells
-	p = { cid = creature, var = variant, c1 = combat1, c2 = combat2, c3 = combat3, c4 = combat4, c5 = combat5, c6 = combat6, c7 = combat7, c8 = combat8 }
+	p = { cid = creature, var = variant, c1 = combats[1], c2 = combats[2], c3 = combats[3], c4 = combats[4], c5 = combats[5], c6 = combats[6], c7 = combats[7], c8 = combats[8] }
     -- need to use events to have each stage go off at different times.
     addEvent(onCast1, 0, p)
     addEvent(onCast2, 50, p)
