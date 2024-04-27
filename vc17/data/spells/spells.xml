@@ -103,7 +103,7 @@
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" />
 	</instant>
-		<instant group="attack" spellid="181" name="Ice Blizzard" words="frigo" level="60" mana="140" premium="0" cooldown="4" groupcooldown="4" selftarget="1" needlearn="0" script="attack/ice_blizzard.lua">
+		<instant group="attack" spellid="121" name="Ice Blizzard" words="frigo" level="60" mana="140" premium="0" cooldown="4" groupcooldown="4" selftarget="1" needlearn="0" script="attack/ice_blizzard.lua">
 		<vocation name="Sorcerer" />
 		<vocation name="Master Sorcerer" />
 	</instant>
