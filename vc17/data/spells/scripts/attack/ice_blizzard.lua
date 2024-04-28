@@ -1,4 +1,4 @@
-local myAreas = {} -- Roughly 8 Stages
+local myAreas = {} 
 
 myAreas[1] = {
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -6,7 +6,7 @@ myAreas[1] = {
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
 	{0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-	{1, 1, 0, 0, 0, 2, 0, 0, 0, 1, 1},
+	{1, 1, 0, 0, 0, 2, 0, 0, 0, 1, 1}, -- Stages of the spell
 	{0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
 	{0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0},
@@ -112,7 +112,7 @@ myAreas[8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 }
 
-local combats = {}
+local combats = {} -- combats for each stage
 
 i = 1
 while i < 9 do
@@ -133,7 +133,7 @@ function onGetFormulaValues(player, level, magicLevel) -- For this we will use s
 end
 
 for i, cb in ipairs(combats) do
-    cb:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
+    cb:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues") -- adding the formula to the combats
 end
 
 function onCast1(p) -- cast function for each stage of the spell
@@ -165,11 +165,11 @@ function onCastSpell(creature, variant) -- cast the spells
 	p = { cid = creature, var = variant, c1 = combats[1], c2 = combats[2], c3 = combats[3], c4 = combats[4], c5 = combats[5], c6 = combats[6], c7 = combats[7], c8 = combats[8] }
     -- need to use events to have each stage go off at different times.
     addEvent(onCast1, 0, p)
-    addEvent(onCast2, 50, p)
-    addEvent(onCast3, 100, p)
-    addEvent(onCast4, 150, p)
-    addEvent(onCast5, 200, p)
-    addEvent(onCast6, 250, p)
-    addEvent(onCast7, 300, p)
-    addEvent(onCast8, 450, p)
+    addEvent(onCast2, 75, p)
+    addEvent(onCast3, 140, p)
+    addEvent(onCast4, 225, p)
+    addEvent(onCast5, 300, p)
+    addEvent(onCast6, 375, p)
+    addEvent(onCast7, 450, p)
+    addEvent(onCast8, 525, p)
 end
